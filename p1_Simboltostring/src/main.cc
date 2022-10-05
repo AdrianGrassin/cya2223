@@ -23,7 +23,7 @@
 
 #include <iostream>
 #include "../include/Alfabeto.h"
-#include "../include/Cadena.h "
+#include "../include/Cadena.h"
 #include <windows.h>
 
 int main(int argc, char *argv[]) {
@@ -45,6 +45,8 @@ int main(int argc, char *argv[]) {
                  "4. Sufijos\n"
                  "5. Subcadenas\n"
                  "\n"
+                 "La cadena además se generará de la primera forma posible al buscar\n"
+                 "las combinaciones de simbolos que coincidan con el alfabeto.\n\n"
                  "End Of Help\n";
     return 0;
   }

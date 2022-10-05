@@ -2,3 +2,5 @@ a b bb bcb bcbabbabbababababaababaabababababababbbbaba
 0 1 2 3 4 5 6 7 8 9 6793836q
 hola
 r a ra mon ramonrrrramonmonmonramon
+
+for if else new class c a m i o n _ { } newclass_camion{for_c}

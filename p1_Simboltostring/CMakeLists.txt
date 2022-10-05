@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.21.1)
 project(p1_Simboltostring)
 
 set(CMAKE_CXX_STANDARD 14)

@@ -8,10 +8,14 @@
 
 Cadena::Cadena(const std::string &linea, Alfabeto *alfabeto_de_la_cadena) {
   alfabeto = alfabeto_de_la_cadena;
+  if (linea.empty()) {
+    cadena_ = nullptr;
+    longitud = 0;
+  } else {
+    std::string cadenastring = linea.substr(linea.find_last_of(' ') + 1, linea.back());
 
-  std::string cadenastring = linea.substr(linea.find_last_of(' ') + 1, linea.back());
-
-  set_string(cadenastring);
+    set_string(cadenastring);
+  }
 }
 
 /**
@@ -88,7 +92,7 @@ std::string Cadena::subcadenas() {
 
   std::string segmentbuff;
 
-  for (int i = maxsized_simbol; i <= longitud; i++) {
+  for (int i = 1; i <= longitud; i++) {
     int aux;
     segmentbuff.erase();
     for (int j = 0; j < longitud;) {
@@ -111,7 +115,7 @@ std::string Cadena::subcadenas() {
 
 void Cadena::opcode_menu(std::ofstream &fileout, int selec) {
   if (cadena_ == nullptr) {
-    fileout << "La cadena introducida no pertenece al alfabeto" << std::endl;
+    fileout << "La cadena introducida no pertenece al alfabeto o está vacía" << std::endl;
     return;
   }
   switch (selec) {
@@ -142,6 +146,7 @@ void Cadena::set_string(std::string &cadena) {
   if (!comprobar_cadena(cadena, maxsized_simbol, 0, 1, solution)) {
     std::cout << "La cadena: " << cadena << " NO pertenece al alfabeto" << std::endl;
     cadena_ = nullptr;
+    longitud = 0;
     return;
   }
 
@@ -159,7 +164,7 @@ bool Cadena::comprobar_cadena(const std::string &cadena,
                               int posicion,
                               int size,
                               std::vector<std::string> &solucion) {
-  if (posicion == -1)
+  if (posicion <= -1)
     return false;
 
   if (posicion + size == cadena.size() + 1 && posicion == cadena.size())
