@@ -24,14 +24,14 @@
 #include <iostream>
 #include "../include/Alfabeto.h"
 #include "../include/Cadena.h "
-//#include <windows.h>
+#include <windows.h>
 
 int main(int argc, char *argv[]) {
 
-  //SetConsoleCP(CP_UTF8);
-  //SetConsoleOutputCP(CP_UTF8);
+  SetConsoleCP(CP_UTF8);
+  SetConsoleOutputCP(CP_UTF8);
 
-  if (argc == 2 && std::string(argv[1]) == "-h") {
+  if (argc == 2 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
     std::cout << "HELP - PRACTICA 1 DE CyA \n"
                  "--------------------------\n"
                  "El programa recibira por linea de comandos el nombre del fichero de entrada, el nombre\n"
@@ -48,38 +48,38 @@ int main(int argc, char *argv[]) {
                  "End Of Help\n";
     return 0;
   }
-try {
-  if (argc == 4) {
-    std::ifstream file(argv[1]);
-    std::string line;
-    std::vector<std::pair<Alfabeto *, Cadena *>> proglist;
+  try {
+    if (argc == 4) {
+      std::ifstream file(argv[1]);
+      std::string line;
+      std::vector<std::pair<Alfabeto *, Cadena *>> proglist;
 
-    if (file.is_open()) {
-      while (getline(file, line)) {
-        auto *dummy_alf = new Alfabeto(line);
-        auto *dummy_cad = new Cadena(line, dummy_alf);
-        proglist.emplace_back(dummy_alf, dummy_cad);
+      if (file.is_open()) {
+        while (getline(file, line)) {
+          auto *dummy_alf = new Alfabeto(line);
+          auto *dummy_cad = new Cadena(line, dummy_alf);
+          proglist.emplace_back(dummy_alf, dummy_cad);
+        }
+
+        for (auto a : proglist) {
+          a.second->print_cadena();
+        }
+
+      } else {
+        throw std::runtime_error("El archivo no se encontró o no se pudo abrir");
       }
 
+      std::ofstream outputfile(argv[2]);
+      int opcode = atoi(argv[3]);
       for (auto a : proglist) {
-        a.second->print_cadena();
+        a.second->opcode_menu(outputfile, opcode);
       }
 
     } else {
-      throw std::runtime_error("El archivo no se encontró o no se pudo abrir");
+      throw std::runtime_error("No se introdujo un número válido de argumentos ");
     }
-
-    std::ofstream outputfile(argv[2]);
-    int opcode = atoi(argv[3]);
-    for (auto a : proglist) {
-      a.second->opcode_menu(outputfile, opcode);
-    }
-
-  } else {
-    throw std::runtime_error("No se introdujo un número válido de argumentos ");
+  } catch (std::runtime_error &error) {
+    std::cerr << error.what();
   }
-}catch(std::runtime_error& error){
-  std::cerr << error.what();
-}
   return 0;
 }

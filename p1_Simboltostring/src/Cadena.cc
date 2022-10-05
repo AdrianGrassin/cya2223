@@ -6,7 +6,6 @@
  */
 #include "../include/Cadena.h"
 
-
 Cadena::Cadena(const std::string &linea, Alfabeto *alfabeto_de_la_cadena) {
   alfabeto = alfabeto_de_la_cadena;
 
@@ -23,7 +22,7 @@ void Cadena::print_cadena() {
     for (int i = 0; i < longitud; i++) {
       std::cout << cadena_[i];
     }
-  std::cout << std::endl;
+    std::cout << std::endl;
   }
 }
 
@@ -111,7 +110,7 @@ std::string Cadena::subcadenas() {
 }
 
 void Cadena::opcode_menu(std::ofstream &fileout, int selec) {
-  if(cadena_ == nullptr) {
+  if (cadena_ == nullptr) {
     fileout << "La cadena introducida no pertenece al alfabeto" << std::endl;
     return;
   }
@@ -155,7 +154,11 @@ void Cadena::set_string(std::string &cadena) {
 
 }
 
-bool Cadena::comprobar_cadena(const std::string &cadena, const int &maxsize, int posicion, int size, std::vector<std::string> &solucion) {
+bool Cadena::comprobar_cadena(const std::string &cadena,
+                              const int &maxsize,
+                              int posicion,
+                              int size,
+                              std::vector<std::string> &solucion) {
   if (posicion == -1)
     return false;
 
@@ -175,7 +178,11 @@ bool Cadena::comprobar_cadena(const std::string &cadena, const int &maxsize, int
       return true;  // fin
     }
     solucion.pop_back();
-    return comprobar_cadena(cadena, maxsize,posicion - size,size + 1,solucion); // se vuelve atras y se incrementa en 1 el tamaño.
+    return comprobar_cadena(cadena,
+                            maxsize,
+                            posicion - size + 1,
+                            size + 1,
+                            solucion); // se vuelve atras y se incrementa en 1 el tamaño.
   } else {
     return comprobar_cadena(cadena, maxsize, posicion, size + 1, solucion); // se incrementa en 1 el tamaño
   }
