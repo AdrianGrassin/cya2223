@@ -23,7 +23,8 @@
 
 #include <iostream>
 #include "../include/Alfabeto.h"
-#include "../include/Cadena.h"
+#include "../include/Lenguaje.h"
+#include "../include/funciones.h"
 #include <windows.h>
 
 int main(int argc, char *argv[]) {
@@ -32,18 +33,18 @@ int main(int argc, char *argv[]) {
   SetConsoleOutputCP(CP_UTF8);
 
   if (argc == 2 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
-    std::cout << "HELP - PRACTICA 1 DE CyA \n"
+    std::cout << "HELP - PRACTICA 2 DE CyA \n"
                  "--------------------------\n"
                  "El programa recibira por linea de comandos el nombre del fichero de entrada, el nombre\n"
                  "del fichero de salida y un codigo de operacion: (ejemplo)\n\n"
-                 "./p01_strings [filein.txt] [fileout.txt] [opcode]\n"
+                 "./p02_strings [filein1.txt] [filein2.txt] [fileout.txt] [opcode]\n"
                  "\n"
                  "OPCODES:\n"
-                 "1. Longitud\n"
-                 "2. Inversa\n"
-                 "3. Prefijos\n"
-                 "4. Sufijos\n"
-                 "5. Subcadenas\n"
+                 "1. Concatenación\n"
+                 "2. Unión\n"
+                 "3. Intersección\n"
+                 "4. Diferencia\n"
+                 "5. Potencia\n"
                  "\n"
                  "La cadena además se generará de la primera forma posible al buscar\n"
                  "las combinaciones de simbolos que coincidan con el alfabeto.\n\n"
@@ -51,35 +52,32 @@ int main(int argc, char *argv[]) {
     return 0;
   }
   try {
-    if (argc == 4) {
-      std::ifstream file(argv[1]);
+    if (argc == 5) {
+      std::ifstream file1(argv[1]);
+      std::ifstream file2(argv[2]);
       std::string line;
-      std::vector<std::pair<Alfabeto *, Cadena *>> proglist;
+      std::vector<std::pair<Alfabeto *, Lenguaje *>> list1;
+      std::vector<std::pair<Alfabeto *, Lenguaje *>> list2;
 
-      if (file.is_open()) {
-        while (getline(file, line)) {
-          auto *dummy_alf = new Alfabeto(line);
-          auto *dummy_cad = new Cadena(line, dummy_alf);
-          proglist.emplace_back(dummy_alf, dummy_cad);
-        }
+      readfile(file1, list1);
+      readfile(file2, list2);
 
-        for (auto a : proglist) {
-          a.second->print_cadena();
-        }
-
-      } else {
-        throw std::runtime_error("El archivo no se encontró o no se pudo abrir");
+      for (auto a : list1) {
+        std::cout << a.second << "\n";
+      }
+      for (auto a : list2) {
+        std::cout << a.second << "\n";
       }
 
-      std::ofstream outputfile(argv[2]);
-      int opcode = atoi(argv[3]);
-      for (auto a : proglist) {
-        a.second->opcode_menu(outputfile, opcode);
+      std::ofstream fileout(argv[3]);
+      int opcode = atoi(argv[4]);
+      for(int i = 0; i < list1.size(); i++) { // suponemos que los ficheros de entrada estén siempre bien redactados
+        list1[i].second->opcode_menu(fileout, opcode, *list2[i].second);
       }
-
     } else {
       throw std::runtime_error("No se introdujo un número válido de argumentos ");
     }
+
   } catch (std::runtime_error &error) {
     std::cerr << error.what();
   }

@@ -1,3 +1,0 @@
-& a b ab bb ba abb bba bab abba bbab abbab 
-& 3 6 7 8 9 67 79 93 38 83 36 679 793 938 383 836 6793 7938 9383 3836 67938 79383 93836 679383 793836 6793836 
-& a h l o ho ol la hol ola hola

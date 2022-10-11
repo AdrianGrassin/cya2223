@@ -78,9 +78,15 @@ class Cadena {
    * @brief Esta función servirá de menú interno del programa a la hora de determinar que función usar dependiendo del opcode introducido
    */
   void opcode_menu(std::ofstream &fileout, int selec);
-
-
   void print_cadena();
+
+  std::string get_chain_as_string() const;
+
+  int get_real_lenght();
+  bool operator<(const Cadena& otracadena);
+  friend std::ostream& operator<<(std::ostream& out, Cadena& cad);
+  std::string operator+(Cadena& otracadena) const;
+
 
 };
 

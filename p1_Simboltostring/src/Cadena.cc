@@ -6,6 +6,13 @@
  */
 #include "../include/Cadena.h"
 
+struct compare{
+  bool operator()(const Cadena* lhs, const Cadena* rhs) const{
+    return lhs->get_chain_as_string() < rhs->get_chain_as_string();
+  }
+};
+
+
 Cadena::Cadena(const std::string &linea, Alfabeto *alfabeto_de_la_cadena) {
   alfabeto = alfabeto_de_la_cadena;
   if (linea.empty()) {
@@ -31,7 +38,7 @@ void Cadena::print_cadena() {
 }
 
 Cadena::~Cadena() {
-  delete (cadena_);
+  delete cadena_;
 }
 
 std::string Cadena::inversa() {
@@ -143,12 +150,15 @@ void Cadena::set_string(std::string &cadena) {
 
   std::vector<std::string> solution(0);
 
-  if (!comprobar_cadena(cadena, maxsized_simbol, 0, 1, solution)) {
+  if (!(comprobar_cadena(cadena, maxsized_simbol, 0, 1, solution)) && cadena != CADENA_VACIA) {
     std::cout << "La cadena: " << cadena << " NO pertenece al alfabeto" << std::endl;
     cadena_ = nullptr;
     longitud = 0;
     return;
   }
+
+  if (cadena == CADENA_VACIA)
+    solution.emplace_back(CADENA_VACIA);
 
   longitud = solution.size();
   cadena_ = new Simbolo[longitud];
@@ -192,3 +202,49 @@ bool Cadena::comprobar_cadena(const std::string &cadena,
     return comprobar_cadena(cadena, maxsize, posicion, size + 1, solucion); // se incrementa en 1 el tamaño
   }
 }
+
+std::ostream &operator<<(std::ostream &out, Cadena &cad) {
+  for (int i = 0; i < cad.longitud; i++) {
+    out << cad.cadena_[i];
+  }
+  return out;
+}
+bool Cadena::operator<(const Cadena& otracadena) {
+  if (longitud < otracadena.longitud)
+    return true;
+  if (longitud > otracadena.longitud)
+    return false;
+
+  for (int i = 0; i < longitud; i++) {
+    if (cadena_[i] < otracadena.cadena_[i])
+      return true;
+
+    if (otracadena.cadena_[i] < cadena_[i])
+      return false;
+
+  }
+  return false;
+}
+int Cadena::get_real_lenght() {
+  if (longitud == 1) {
+    if (cadena_[0].getsimbolo() == CADENA_VACIA) {
+      return 0;
+    } else { return 1; }
+  }
+  else{
+    return longitud;
+  }
+}
+std::string Cadena::operator+(Cadena &otracadena) const {
+  return get_chain_as_string() + otracadena.get_chain_as_string() ;
+}
+
+std::string Cadena::get_chain_as_string() const{
+  std::string cadena;
+  for(int i = 0; i < longitud; i++){
+    cadena += cadena_[i].getsimbolo();
+  }
+  return cadena;
+}
+
+
