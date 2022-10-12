@@ -8,7 +8,7 @@
 
 #include "../include/Alfabeto.h"
 
-Alfabeto::Alfabeto(const std::string &linea) {
+Alfabeto::Alfabeto(const std::string &linea) {  //string input has to be like:a b c d
   bool delimitador = false;
   std::string alfabetostring(linea.substr(0, linea.find_last_of(' ') + 1));
   std::string buffer;

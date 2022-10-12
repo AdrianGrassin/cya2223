@@ -1,4 +1,4 @@
-# Install script for directory: D:/Clase/2/CyA3/p1_Simboltostring
+# Install script for directory: D:/Clase/2/CyA3/cya2223/p1_Simboltostring
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Clase/2/CyA3/p1_Simboltostring/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/Clase/2/CyA3/cya2223/p1_Simboltostring/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
