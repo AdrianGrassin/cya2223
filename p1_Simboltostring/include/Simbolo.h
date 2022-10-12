@@ -26,4 +26,8 @@ class Simbolo {
   friend std::ostream &operator<<(std::ostream &out, Simbolo &s);
 
 };
+
+
+
+
 #endif // CYA3_P1_INCLUDE_SIMBOLO_H_

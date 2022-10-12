@@ -9,8 +9,7 @@
 Cadena::Cadena(const std::string &linea, Alfabeto *alfabeto_de_la_cadena) {
   alfabeto = alfabeto_de_la_cadena;
 
-  std::string cadenastring = linea.substr(linea.find_last_of(' ') + 1, linea.back());
-
+  std::string cadenastring = linea.substr(linea.find_last_of('}') + 1, linea.back());
   set_string(cadenastring);
 }
 
@@ -66,6 +65,10 @@ std::string Cadena::subcadenas() {
     if (maxsized_simbol < a.get_simbolsize()) {
       maxsized_simbol = a.get_simbolsize();
     }
+  }
+
+  for(auto a : alfabeto->getAlfabeto()){
+
   }
 
   std::set<std::string> subchains;
