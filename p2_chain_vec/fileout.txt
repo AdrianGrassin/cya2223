@@ -1,0 +1,3 @@
+ab abc bbcc cab 
+00 01 1 10 11 a aa aaa 
+0 00 01 1 10 11 
