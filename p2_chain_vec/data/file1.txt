@@ -1,3 +1,6 @@
-{ a b c } { ab abc cab bbcc }
-{ a } { a aa aaa }
-{ 0 1 } { 0 1 00 01 10 11 }
+{ a b } { a aabb }
+{ a b } { a bb & }
+{ a b } { a bb & }
+{ 0 1 } { 0 10 110 & }
+{ a b } { a aabb }
+{ a b } { a aabb }

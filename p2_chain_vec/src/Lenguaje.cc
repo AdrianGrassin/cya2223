@@ -98,6 +98,10 @@ std::string Lenguaje::diferencia(Lenguaje &len) {
   }
   if (diff.empty())
     diff = "Lenguaje Vacío";
+
+  if (diff == "& ")
+    diff = "Lenguaje Vacío";
+
   return diff;
 }
 
@@ -150,6 +154,25 @@ void Lenguaje::concatenates_with(Lenguaje &len) {
   }
 }
 
+std::string Lenguaje::subcadenas() {
+    std::string subcadenas;
+    std::set<Cadena *,compare> set_subcadenas;
+    for (const auto &value_L1 : cadenas_del_lenguaje) {
+        for (int i = 0; i < value_L1->get_real_lenght(); i++) {
+            for (int j = 1; j <= value_L1->get_real_lenght() - i; j++) {
+              if(value_L1->get_chain_as_string().substr(i,j) != "&") {
+                auto *aux = new Cadena(value_L1->get_chain_as_string().substr(i, j), alfabeto_);
+                set_subcadenas.insert(aux);
+              }
+            }
+        }
+    }
+    for(const auto& a : set_subcadenas)
+        subcadenas += a->get_chain_as_string() + " ";
+
+    return subcadenas;
+}
+
 void Lenguaje::opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len) {
   switch (opcode) {
     case 1: out << concatenacion(len) << "\n";
@@ -164,6 +187,9 @@ void Lenguaje::opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len) {
       break;
     case 6:out << potencia() << "\n";
       break;
+    case 7: out << subcadenas() << "\n";
+      break;
     default:throw std::runtime_error("Bad OPCODE");
   }
 }
+

@@ -25,24 +25,24 @@
 #include "../include/Alfabeto.h"
 #include "../include/Lenguaje.h"
 #include "../include/funciones.h"
-#include <windows.h>
+// #include <windows.h>
 
 int main(int argc, char *argv[]) {
 
-  SetConsoleCP(CP_UTF8);
-  SetConsoleOutputCP(CP_UTF8);
+ // SetConsoleCP(CP_UTF8);
+ //  SetConsoleOutputCP(CP_UTF8);
 
   if (argc == 2 && (std::string(argv[1]) == "-h" || std::string(argv[1]) == "--help")) {
     std::cout << "HELP - PRACTICA 2 DE CyA \n"
                  "--------------------------\n"
                  "El programa recibira por linea de comandos el nombre del fichero de entrada, el nombre\n"
                  "del fichero de salida y un codigo de operacion: (ejemplo)\n\n"
-                 "./p02_strings [filein1.txt] [filein2.txt] [fileout.txt] [opcode]\n"
+                 "./p02_lang [filein1.txt] [filein2.txt] [fileout.txt] [opcode]\n"
                  "\n"
                  "OPCODES:\n"
                  "1. Concatenación\n"
-                 "2. Intersección\n"
-                 "3. Unión\n"
+                 "2. Unión\n"
+                 "3. Intersección\n"
                  "4. Diferencia\n"
                  "5. Inversa\n"
                  "6. Potencia\n"
@@ -76,6 +76,8 @@ int main(int argc, char *argv[]) {
       std::ofstream fileout(argv[3]);
       int opcode = atoi(argv[4]);
       for (int i = 0; i < list1.size(); i++) { // suponemos que los ficheros de entrada estén siempre bien redactados
+        std::cout << "Introduce un opcode: ";
+        std::cin >> opcode;
         list1[i].second->opcode_menu(fileout, opcode, *list2[i].second);
       }
     } else {

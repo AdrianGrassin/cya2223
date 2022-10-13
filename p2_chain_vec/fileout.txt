@@ -1,3 +1,6 @@
-ab abc bbcc cab 
-00 01 1 10 11 a aa aaa 
-0 00 01 1 10 11 
+a0 a10 a110 aabb0 aabb10 aabb110  - L1 + L3
+& bb - L2 - L1
+&  - L2 ^ L3
+& 0 01 011 -L3
+a aabb bb L1 U L2
+a aa aaa aaaabb aaabb aaabba aaabbaabb aabb aabba aabbaa aabbaaabb aabbaabb aabbaabba aabbaabbaabb  L1*3

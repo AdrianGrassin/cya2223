@@ -30,6 +30,7 @@ class Lenguaje {
   std::string diferencia(Lenguaje &len);
   std::string inversa();
   std::string potencia();
+  std::string subcadenas();
 
   void print_size_of_chains();
   void concatenates_with(Lenguaje &len);
