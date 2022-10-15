@@ -1,6 +1,0 @@
-{ a b } { a aabb }
-{ a b } { a bb & }
-{ a b } { a bb & }
-{ 0 1 } { 0 10 110 & }
-{ a b } { a aabb }
-{ a b } { a aabb }
