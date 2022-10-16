@@ -21,6 +21,9 @@ class Lenguaje {
    * retornará su tamaño como 0, en otros casos se retornará el tamaño real de la cadena.
    */
   Lenguaje(const std::string &line, Alfabeto *alfabeto);
+  Lenguaje();
+
+  std::set<Cadena *, compare> get_cadenas_del_lenguaje();
 
   void opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len);
 
@@ -35,8 +38,17 @@ class Lenguaje {
   void print_size_of_chains();
   void concatenates_with(Lenguaje &len);
 
+  Lenguaje &operator=(const Lenguaje &len);
+  Lenguaje &operator+(Lenguaje &len);
+  Lenguaje &operator-(Lenguaje &len);
+  Lenguaje &operator*(int n);
+  Lenguaje &operator^(Lenguaje &len);
+  Lenguaje &operator|(Lenguaje &len);
+  Lenguaje &operator!();
   friend std::ostream &operator<<(std::ostream &out, Lenguaje &len);
 
+
+  Alfabeto *getalfabeto();
 };
 
 #endif //P1_SIMBOLTOSTRING_P1_SIMBOLTOSTRING_LENGUAJE_H_

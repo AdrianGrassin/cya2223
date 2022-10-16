@@ -1,5 +1,5 @@
-#ifndef P3__CALC_H_
-#define P3__CALC_H_
+#ifndef P3_CALC_H_
+#define P3_CALC_H_
 
 #include "include/Alfabeto.h"
 #include "include/Lenguaje.h"
@@ -7,15 +7,31 @@
 
 class Calc {
  public:
-    explicit Calc(std::ifstream &file);
-   ~Calc() = default;
+  explicit Calc(std::ifstream &file);
+  ~Calc() = default;
 
   void operate();
+
  private:
-  std::vector<std::pair<Alfabeto *, Lenguaje *>> definiciones;
-  std::vector<std::pair<std::string, std::string>> operaciones;
-    std::vector<std::string> resultados;
+  void readfile(std::ifstream &file,
+                std::vector<std::pair<Alfabeto *, Lenguaje *>> &lista,
+                std::vector<std::string> &operaciones);
+
+  static std::string reformatinput(std::string &line);
+
+  Lenguaje concatenar(Lenguaje &l1, Lenguaje &l2);
+  Lenguaje diferencia(Lenguaje &l1, Lenguaje &l2);
+  Lenguaje potencia(Lenguaje &l1, int &n);
+  Lenguaje union_len(Lenguaje &l1, Lenguaje &l2);
+  Lenguaje interseccion(Lenguaje &l1, Lenguaje &l2);
+  Lenguaje inversa(Lenguaje &l1);
+  void perform_operation(char op, std::stack<std::string> &pila);
+
+
+  std::vector<std::pair<Alfabeto *, Lenguaje *>> definiciones_;
+  std::vector<std::string> operaciones_;
+  std::vector<std::string> resultados_;
 
 };
 
-#endif //P3__CALC_H_
+#endif //P3_CALC_H_

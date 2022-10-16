@@ -10,7 +10,6 @@ Lenguaje::Lenguaje(const std::string &line, Alfabeto *alfabeto) {
   std::string string_buffer;
   for (const auto &caracter : line) {
     if (caracter == ' ') {
-
       cadenas_del_lenguaje.insert(new Cadena(string_buffer, alfabeto));
       string_buffer.clear();
     }
@@ -155,22 +154,22 @@ void Lenguaje::concatenates_with(Lenguaje &len) {
 }
 
 std::string Lenguaje::subcadenas() {
-    std::string subcadenas;
-    std::set<Cadena *,compare> set_subcadenas;
-    for (const auto &value_L1 : cadenas_del_lenguaje) {
-        for (int i = 0; i < value_L1->get_real_lenght(); i++) {
-            for (int j = 1; j <= value_L1->get_real_lenght() - i; j++) {
-              if(value_L1->get_chain_as_string().substr(i,j) != "&") {
-                auto *aux = new Cadena(value_L1->get_chain_as_string().substr(i, j), alfabeto_);
-                set_subcadenas.insert(aux);
-              }
-            }
+  std::string subcadenas;
+  std::set<Cadena *, compare> set_subcadenas;
+  for (const auto &value_L1 : cadenas_del_lenguaje) {
+    for (int i = 0; i < value_L1->get_real_lenght(); i++) {
+      for (int j = 1; j <= value_L1->get_real_lenght() - i; j++) {
+        if (value_L1->get_chain_as_string().substr(i, j) != "&") {
+          auto *aux = new Cadena(value_L1->get_chain_as_string().substr(i, j), alfabeto_);
+          set_subcadenas.insert(aux);
         }
+      }
     }
-    for(const auto& a : set_subcadenas)
-        subcadenas += a->get_chain_as_string() + " ";
+  }
+  for (const auto &a : set_subcadenas)
+    subcadenas += a->get_chain_as_string() + " ";
 
-    return subcadenas;
+  return subcadenas;
 }
 
 void Lenguaje::opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len) {
@@ -192,4 +191,61 @@ void Lenguaje::opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len) {
     default:throw std::runtime_error("Bad OPCODE");
   }
 }
+Lenguaje::Lenguaje() {
+  alfabeto_ = nullptr;
+}
+std::set<Cadena *, compare> Lenguaje::get_cadenas_del_lenguaje() {
+  return cadenas_del_lenguaje;
+}
+
+Lenguaje &Lenguaje::operator=(const Lenguaje &len) = default;
+
+
+Alfabeto *Lenguaje::getalfabeto() {
+  return alfabeto_;
+}
+Lenguaje &Lenguaje::operator+(Lenguaje &len) {
+    auto *aux = new Lenguaje(*this);
+    aux->concatenates_with(len);
+    return *aux;
+}
+Lenguaje &Lenguaje::operator-(Lenguaje &len) {
+    auto *aux = new Lenguaje(*this);
+    for(auto a : len.cadenas_del_lenguaje)
+        aux->cadenas_del_lenguaje.erase(a);
+
+    return *aux;
+}
+Lenguaje &Lenguaje::operator*(int n) {
+    auto *aux = new Lenguaje(*this);
+    for(int i = 1; i < n; i++) {
+      aux->concatenates_with(*this);
+      aux->op_union(*this);
+    }
+    aux->cadenas_del_lenguaje.insert(new Cadena("&", new Alfabeto("& ")));
+    return *aux;
+}
+Lenguaje &Lenguaje::operator|(Lenguaje &len) {
+    auto *aux = new Lenguaje(*this);
+    aux->op_union(len);
+    return *aux;
+}
+Lenguaje &Lenguaje::operator^(Lenguaje &len) {
+    auto *aux = new Lenguaje(*this);
+    aux->interseccion(len);
+    return *aux;
+}
+
+Lenguaje &Lenguaje::operator!() {
+    auto *aux = new Lenguaje(*this);
+    aux->inversa();
+    return *aux;
+}
+
+
+
+
+
+
+
 

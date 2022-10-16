@@ -12,6 +12,9 @@ class Alfabeto {
   explicit Alfabeto(const std::string& linea);
   std::set<Simbolo> getAlfabeto() const;
 
+
+  Alfabeto operator+(const Alfabeto& a) const;
+
 };
 
 #endif // CYA3_P1_ALFABETO_H_

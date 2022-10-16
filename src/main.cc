@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
       std::ifstream file1(argv[1]);
       if(file1.is_open()){
         Calc C(file1);
-        C.operate();
+//        C.operate();
 
       } else {
         throw std::invalid_argument("Error: El fichero no existe");

@@ -35,3 +35,16 @@ Alfabeto::Alfabeto(const std::string &linea) {  //string input has to be like:a 
 std::set<Simbolo> Alfabeto::getAlfabeto() const {
   return alfabeto_;
 }
+
+Alfabeto Alfabeto::operator+(const Alfabeto &a) const {
+    std::string alfabeto_string;
+    for (const auto &b : alfabeto_) {
+        alfabeto_string += b.getsimbolo();
+        alfabeto_string += ' ';
+    }
+    for (const auto &b : a.getAlfabeto()) {
+        alfabeto_string += b.getsimbolo();
+        alfabeto_string += ' ';
+    }
+    return Alfabeto(alfabeto_string);
+}

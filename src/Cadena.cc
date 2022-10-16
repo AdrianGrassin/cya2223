@@ -1,7 +1,7 @@
 /**
  * @file Cadena.cc
  *
- * @brief Probablemente sea el fichero que más código tiene ya que la mayoría de operaciones de esta
+ * @brief Probablemente sea el fichero que más código tiene ya que la mayoría de operaciones_ de esta
  * práctica se encuentran a nivel de cadenas.
  */
 #include "../include/Cadena.h"
