@@ -3,7 +3,7 @@
 //
 
 #include <stack>
-#include "Calc.h"
+#include "../include/Calc.h"
 
 void Calc::readfile(std::ifstream &file,
                     std::vector<std::pair<Alfabeto *, Lenguaje *>> &lista,

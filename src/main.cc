@@ -24,8 +24,7 @@
 #include <iostream>
 #include "../include/Alfabeto.h"
 #include "../include/Lenguaje.h"
-#include "../include/funciones.h"
-#include "../Calc.h"
+#include "../include/Calc.h"
 // #include <windows.h>
 
 int main(int argc, char *argv[]) {

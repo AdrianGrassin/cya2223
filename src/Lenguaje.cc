@@ -3,13 +3,12 @@
 //
 
 #include "../include/Lenguaje.h"
-#include "../include/funciones.h"
 
 Lenguaje::Lenguaje(const std::string &line, Alfabeto *alfabeto) {
   alfabeto_ = alfabeto;
   std::string string_buffer;
   for (const auto &caracter : line) {
-    if (caracter == ' ') {
+    if (caracter == ' ' && line != "Lenguaje Vacío") {
       cadenas_del_lenguaje.insert(new Cadena(string_buffer, alfabeto));
       string_buffer.clear();
     }

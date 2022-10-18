@@ -1,9 +1,8 @@
 #ifndef P3_CALC_H_
 #define P3_CALC_H_
 
-#include "include/Alfabeto.h"
-#include "include/Lenguaje.h"
-#include "include/funciones.h"
+#include "Alfabeto.h"
+#include "Lenguaje.h"
 #include <stack>
 
 enum tipo_pila {
