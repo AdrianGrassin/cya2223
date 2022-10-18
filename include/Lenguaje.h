@@ -23,7 +23,7 @@ class Lenguaje {
   Lenguaje(const std::string &line, Alfabeto *alfabeto);
   Lenguaje();
 
-  std::set<Cadena *, compare> get_cadenas_del_lenguaje();
+  std::set<Cadena *, compare>& get_cadenas_del_lenguaje();
 
   void opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len);
 

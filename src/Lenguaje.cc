@@ -146,6 +146,7 @@ void Lenguaje::concatenates_with(Lenguaje &len) {
   std::set<Cadena *, compare> copy(cadenas_del_lenguaje);
   for (auto a : copy) {
     for (auto b : len.cadenas_del_lenguaje) {
+      if (b->get_real_lenght() == 0) { continue; }
       Cadena aux(*a);
       aux += *b;
       cadenas_del_lenguaje.emplace(new Cadena(aux));
@@ -194,58 +195,51 @@ void Lenguaje::opcode_menu(std::ofstream &out, int &opcode, Lenguaje &len) {
 Lenguaje::Lenguaje() {
   alfabeto_ = nullptr;
 }
-std::set<Cadena *, compare> Lenguaje::get_cadenas_del_lenguaje() {
+std::set<Cadena *, compare> &Lenguaje::get_cadenas_del_lenguaje() {
   return cadenas_del_lenguaje;
 }
 
 Lenguaje &Lenguaje::operator=(const Lenguaje &len) = default;
 
-
 Alfabeto *Lenguaje::getalfabeto() {
   return alfabeto_;
 }
 Lenguaje &Lenguaje::operator+(Lenguaje &len) {
-    auto *aux = new Lenguaje(*this);
-    aux->concatenates_with(len);
-    return *aux;
+  auto *aux = new Lenguaje(*this);
+  aux->concatenates_with(len);
+  return *aux;
 }
 Lenguaje &Lenguaje::operator-(Lenguaje &len) {
-    auto *aux = new Lenguaje(*this);
-    for(auto a : len.cadenas_del_lenguaje)
-        aux->cadenas_del_lenguaje.erase(a);
+  auto *aux = new Lenguaje(*this);
+  for (auto a : len.cadenas_del_lenguaje)
+    aux->cadenas_del_lenguaje.erase(a);
 
-    return *aux;
+  return *aux;
 }
 Lenguaje &Lenguaje::operator*(int n) {
-    auto *aux = new Lenguaje(*this);
-    for(int i = 1; i < n; i++) {
-      aux->concatenates_with(*this);
-      aux->op_union(*this);
-    }
-    aux->cadenas_del_lenguaje.insert(new Cadena("&", new Alfabeto("& ")));
-    return *aux;
+  auto *aux = new Lenguaje(*this);
+  for (int i = 1; i < n; i++) {
+    aux->concatenates_with(*this);
+    aux = new Lenguaje(aux->op_union(*this), alfabeto_);
+  }
+  aux->cadenas_del_lenguaje.insert(new Cadena("&", new Alfabeto("& ")));
+  return *aux;
 }
+
 Lenguaje &Lenguaje::operator|(Lenguaje &len) {
-    auto *aux = new Lenguaje(*this);
-    aux->op_union(len);
-    return *aux;
+  auto *alf_aux = new Alfabeto(*alfabeto_ + *len.alfabeto_);
+  auto *len_aux = new Lenguaje(this->op_union(len), alf_aux);
+  return *len_aux;
 }
+
 Lenguaje &Lenguaje::operator^(Lenguaje &len) {
-    auto *aux = new Lenguaje(*this);
-    aux->interseccion(len);
-    return *aux;
+  auto *aux = new Lenguaje(*this);
+  aux->interseccion(len);
+  return *aux;
 }
 
 Lenguaje &Lenguaje::operator!() {
-    auto *aux = new Lenguaje(*this);
-    aux->inversa();
-    return *aux;
+  auto *aux = new Lenguaje(*this);
+  aux->inversa();
+  return *aux;
 }
-
-
-
-
-
-
-
-

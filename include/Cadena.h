@@ -84,9 +84,10 @@ class Cadena {
   void print_cadena();
 
   std::string get_chain_as_string() const;
+  void erase_cadenavacia();
 
   std::vector<Simbolo> &get_chain();
-  int get_real_lenght();
+  int get_real_lenght() const;
   bool operator<(const Cadena &otracadena);
   friend std::ostream &operator<<(std::ostream &out, Cadena &cad);
   std::string operator+(Cadena &otracadena) const;
@@ -96,7 +97,11 @@ class Cadena {
 
 struct compare {
   bool operator()(const Cadena *lhs, const Cadena *rhs) const {
-    return lhs->get_chain_as_string() < rhs->get_chain_as_string();
+    if (lhs->get_real_lenght() == rhs->get_real_lenght()) {
+      return lhs->get_chain_as_string() < rhs->get_chain_as_string();
+    } else {
+      return lhs->get_chain_as_string().size() < rhs->get_chain_as_string().size();
+    }
   }
 };
 

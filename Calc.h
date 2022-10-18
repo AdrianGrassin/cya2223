@@ -17,13 +17,13 @@ struct elemento_pila {
     Lenguaje *lenguaje{};
     int numero;
   } datos;
-  elemento_pila(tipo_pila tipo, Lenguaje *lenguaje){
-    if(tipo == Lenguaje_en_pila) {
-      this->tipo = tipo;
-      this->datos.lenguaje = lenguaje;
-    } else {
-      this->datos.numero = *(int*)&lenguaje;
-    }
+  elemento_pila(tipo_pila tipo, Lenguaje *lenguaje) {
+    this->tipo = tipo;
+    this->datos.lenguaje = lenguaje;
+  }
+  elemento_pila(tipo_pila tipo, int numero) {
+    this->tipo = tipo;
+    this->datos.numero = numero;
   }
 };
 
@@ -33,11 +33,12 @@ class Calc {
   ~Calc() = default;
 
   void operate();
+  void get_resultado();
 
  private:
   void readfile(std::ifstream &file,
                 std::vector<std::pair<Alfabeto *, Lenguaje *>> &lista,
-                std::vector<std::string> &operaciones);
+                std::vector<std::vector<std::string>> &operaciones);
 
   static std::string reformatinput(std::string &line);
 
@@ -48,10 +49,11 @@ class Calc {
   Lenguaje interseccion(Lenguaje &l1, Lenguaje &l2);
   Lenguaje inversa(Lenguaje &l1);
   void perform_operation(char op, std::stack<elemento_pila> &pila);
+  void refine_result();
 
   std::vector<std::pair<Alfabeto *, Lenguaje *>> definiciones_;
-  std::vector<std::string> operaciones_;
-  std::vector<std::string> resultados_;
+  std::vector<std::vector<std::string>> operaciones_;
+  std::vector<Lenguaje*> resultados_;
 
 };
 

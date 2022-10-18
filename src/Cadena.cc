@@ -206,14 +206,18 @@ bool Cadena::operator<(const Cadena &otracadena) {
   }
   return false;
 }
-int Cadena::get_real_lenght() {
-  if (cadena_.size() == 1) {
-    if (cadena_[0].getsimbolo() == CADENA_VACIA) {
-      return 0;
-    } else { return 1; }
-  } else {
-    return cadena_.size();
+
+int Cadena::get_real_lenght() const {
+  int size = 0;
+  if(cadena_.empty())
+    return 0;
+
+  for (int i = cadena_.size() - 1; i >= 0; i--) {
+    if (cadena_[i].getsimbolo() != CADENA_VACIA) {
+      size++;
+    }
   }
+  return size;
 }
 
 std::string Cadena::operator+(Cadena &otracadena) const {
@@ -234,6 +238,11 @@ void Cadena::operator+=(Cadena &otracadena) {
 std::vector<Simbolo> &Cadena::get_chain() {
   return cadena_;
 }
-
-
-
+void Cadena::erase_cadenavacia() {
+  for (int i = 0; i < cadena_.size(); i++) {
+    if (cadena_[i].getsimbolo() == CADENA_VACIA) {
+      cadena_.erase(cadena_.begin() + i);
+      i--;
+    }
+  }
+}

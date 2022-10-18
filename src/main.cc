@@ -43,6 +43,9 @@ int main(int argc, char *argv[]) {
       if(file1.is_open()){
         Calc C(file1);
         C.operate();
+        std::cout << "El resultado de las operaciones es: " << std::endl;
+        C.get_resultado();
+        std::cout << std::endl;
 
       } else {
         throw std::invalid_argument("Error: El fichero no existe");
