@@ -4,6 +4,28 @@
 #include "include/Alfabeto.h"
 #include "include/Lenguaje.h"
 #include "include/funciones.h"
+#include <stack>
+
+enum tipo_pila {
+  Lenguaje_en_pila,
+  Numero
+};
+
+struct elemento_pila {
+  tipo_pila tipo;
+  union {
+    Lenguaje *lenguaje{};
+    int numero;
+  } datos;
+  elemento_pila(tipo_pila tipo, Lenguaje *lenguaje){
+    if(tipo == Lenguaje_en_pila) {
+      this->tipo = tipo;
+      this->datos.lenguaje = lenguaje;
+    } else {
+      this->datos.numero = *(int*)&lenguaje;
+    }
+  }
+};
 
 class Calc {
  public:
@@ -25,8 +47,7 @@ class Calc {
   Lenguaje union_len(Lenguaje &l1, Lenguaje &l2);
   Lenguaje interseccion(Lenguaje &l1, Lenguaje &l2);
   Lenguaje inversa(Lenguaje &l1);
-  void perform_operation(char op, std::stack<std::string> &pila);
-
+  void perform_operation(char op, std::stack<elemento_pila> &pila);
 
   std::vector<std::pair<Alfabeto *, Lenguaje *>> definiciones_;
   std::vector<std::string> operaciones_;

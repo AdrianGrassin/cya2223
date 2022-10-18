@@ -51,26 +51,67 @@ Calc::Calc(std::ifstream &file) {
 }
 
 void Calc::operate() {
-  // rpn algorithm to evaluate the operations
-  // Languajes will be in the form of L1, L2, L3, etc.
-  // Operations will be in the form of +, -, *, |, ∧ and !
-  // + represents concatenation, it's done by the function concatenar
-  // - represents difference, it's done by the function diferencia
-  // * represents star, it's done by the function potencia
-  // | represents union
-  // ∧ represents intersection
-  // ! represents complement
-  // the result will be stored as a string in the vector resultados_
-  std::stack<std::string> pila;
-  Lenguaje* resultado;
+  std::stack<elemento_pila> pila;
+  Lenguaje *resultado;
   for (auto &i : operaciones_) {
-    if(i[0] == 'L') {
-      pila.push(i);
+    if (i[0] == 'L') {
+      pila.push({Lenguaje_en_pila, definiciones_[i[1] - '0'].second});
     }
-    else if(i[0] == '+' || i[0] == '-' || i[0] == '|' || i[0] == '!' || i[0] == '^' || i[0] == '*'){
+    if (std::isdigit(i[0])) {
+        pila.push({Numero, (Lenguaje*)std::stoi(i)});
+    } else if (i[0] == '+' || i[0] == '-' || i[0] == '|' || i[0] == '!' || i[0] == '^' || i[0] == '*') {
       perform_operation(i[0], pila);
     }
   }
+}
+
+void Calc::perform_operation(char op, std::stack<elemento_pila> &pila) {
+    Lenguaje *l1, *l2;
+    int n;
+    switch (op) {
+        case '+':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        l2 = pila.top().datos.lenguaje;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(concatenar(*l1, *l2))});
+        break;
+        case '-':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        l2 = pila.top().datos.lenguaje;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(diferencia(*l1, *l2))});
+        break;
+        case '|':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        l2 = pila.top().datos.lenguaje;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(union_len(*l1, *l2))});
+        break;
+        case '!':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(inversa(*l1))});
+        break;
+        case '^':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        l2 = pila.top().datos.lenguaje;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(interseccion(*l1, *l2))});
+        break;
+        case '*':
+        l1 = pila.top().datos.lenguaje;
+        pila.pop();
+        n = pila.top().datos.numero;
+        pila.pop();
+        pila.push({Lenguaje_en_pila, new Lenguaje(potencia(*l1, n))});
+        break;
+      default: break;
+    }
+
 }
 
 Lenguaje Calc::concatenar(Lenguaje &l1, Lenguaje &l2) {
@@ -107,7 +148,3 @@ Lenguaje Calc::inversa(Lenguaje &l1) {
   result = !l1;
   return result;
 }
-void Calc::perform_operation(char op, std::stack<std::string> &pila) {
-
-}
-
