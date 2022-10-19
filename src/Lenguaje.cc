@@ -242,3 +242,12 @@ Lenguaje &Lenguaje::operator!() {
   aux->inversa();
   return *aux;
 }
+
+void Lenguaje::set_tag(const std::string& tag) {
+  tag_ = tag;
+}
+
+
+std::string Lenguaje::get_tag() const{
+    return tag_;
+}

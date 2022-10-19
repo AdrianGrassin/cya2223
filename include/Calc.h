@@ -47,8 +47,11 @@ class Calc {
   Lenguaje union_len(Lenguaje &l1, Lenguaje &l2);
   Lenguaje interseccion(Lenguaje &l1, Lenguaje &l2);
   Lenguaje inversa(Lenguaje &l1);
+
   void perform_operation(char op, std::stack<elemento_pila> &pila);
   void refine_result();
+  bool is_str_a_lng(std::string &str);
+  int findbytag(std::string &str);
 
   std::vector<std::pair<Alfabeto *, Lenguaje *>> definiciones_;
   std::vector<std::vector<std::string>> operaciones_;

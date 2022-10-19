@@ -12,10 +12,11 @@ void Calc::readfile(std::ifstream &file,
   std::string line;
   if (file.is_open()) {
     while (getline(file, line)) {
-      if (line[3] == '=') {
+      if (line.find('=') != std::string::npos) {
         auto *dummy_alf = new Alfabeto(reformatinput(line));
-        auto *dummy_cad = new Lenguaje(reformatinput(line), dummy_alf);
-        lista.emplace_back(dummy_alf, dummy_cad);
+        auto *dummy_len = new Lenguaje(reformatinput(line), dummy_alf);
+        dummy_len->set_tag(line.substr(0, line.find(' ')));
+        lista.emplace_back(dummy_alf, dummy_len);
       } else { // operaciones
         line += ' ';
         std::string word_buffer;
@@ -38,6 +39,11 @@ void Calc::readfile(std::ifstream &file,
 }
 
 std::string Calc::reformatinput(std::string &line) {
+  if (line.find('{') == std::string::npos || line.find('}') == std::string::npos) {
+    throw std::runtime_error(
+        "El formato de linea " + line + " no es correcto.\nSe esperaba un \"{\" y un \"}\" para definir el lenguaje");
+  }
+
   std::string linetomodify = line.substr(line.find_first_of('{'), line.find_first_of('}'));
   for (auto &i : linetomodify) {
     if (i == ',') {
@@ -57,9 +63,9 @@ void Calc::operate() {
   std::stack<elemento_pila> pila;
   Lenguaje *resultado;
   for (auto &i : operaciones_) {
-    for (auto &j : i) {
-      if (j[0] == 'L') {
-        pila.push({Lenguaje_en_pila, definiciones_[j[1] - '1'].second});
+     for (auto &j : i) {
+      if (is_str_a_lng(j)) {
+        pila.push({Lenguaje_en_pila, definiciones_[findbytag(j)].second});
       } else if (isdigit(j[0])) {
         pila.push({Numero, definiciones_[j[0] - '0'].second});
       } else {
@@ -67,7 +73,7 @@ void Calc::operate() {
       }
     }
     resultados_.emplace_back(pila.top().datos.lenguaje);
-      pila.pop();
+    pila.pop();
   }
   refine_result();
 }
@@ -171,4 +177,22 @@ void Calc::refine_result() {
       }
     }
   }
+}
+
+bool Calc::is_str_a_lng(std::string &str) {
+  for (auto &i : definiciones_) {
+    if (i.second->get_tag() == str) {
+      return true;
+    }
+  }
+  return false;
+}
+
+int Calc::findbytag(std::string &str) {
+  for (int i = 0; i < definiciones_.size(); i++) {
+    if (definiciones_[i].second->get_tag() == str) {
+      return i;
+    }
+  }
+  return -1;
 }

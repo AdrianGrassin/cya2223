@@ -11,6 +11,7 @@ class Lenguaje {
  private:
   std::set<Cadena *, compare> cadenas_del_lenguaje;
   Alfabeto *alfabeto_;
+  std::string tag_;
 
  public:
   /**
@@ -37,6 +38,9 @@ class Lenguaje {
 
   void print_size_of_chains();
   void concatenates_with(Lenguaje &len);
+
+  void set_tag(const std::string& tag);
+  std::string get_tag() const;
 
   Lenguaje &operator=(const Lenguaje &len);
   Lenguaje &operator+(Lenguaje &len);
