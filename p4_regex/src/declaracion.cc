@@ -18,7 +18,9 @@ std::ostream &operator<<(std::ostream &os, const Declaracion &declaracion) {
 }
 
 Variable Declaracion::getVariable(std::string &line) {
-  std::regex variable_name(R"(\s[a-z]*)");
+
+  //regex para encontrar la expresión de inicialización de variables
+  std::regex variable_name(R"(\s.+\s+(=|;))");
   std::regex variable_value(R"(\d+)");
   std::regex variable_type(R"(int|double)");
 
@@ -26,16 +28,20 @@ Variable Declaracion::getVariable(std::string &line) {
   std::string nombre;
   std::string tipo;
   std::string valor;
+
   if (std::regex_search(line, match, variable_name)) {
     nombre = match.str();
-    nombre = nombre.substr(1, nombre.size());
+    nombre = nombre.substr(1, nombre.find_last_of(' '));
+
   }
+
   if (std::regex_search(line, match, variable_type)) {
     tipo = match.str();
   }
   if (std::regex_search(line, match, variable_value)) {
     valor = match.str();
   }
+
   if (tipo == "int") {
     if (valor.empty()) {
       return {nombre, Tipo::tipo_int, 0};

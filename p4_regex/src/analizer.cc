@@ -1,6 +1,5 @@
 #include "../include/analizer.h"
 
-
 analizer::analizer(std::ifstream &file) {
 
 
@@ -11,19 +10,17 @@ analizer::analizer(std::ifstream &file) {
   std::regex comentario_inicio_multilinea("/\\*");
   std::regex comentario_fin_multilinea("\\*/");
 
-  // declaraciones int and double
+  // declaraciones
   std::regex declaracion_simple(R"(int\s+\w+\s*=?.*;|double\s+\w+\s*=?.*;)");
-  // no incluir definiciones que en el nombre tengan un parentesis
-
 
   // bucles
-  std::regex bucle_for(R"(for)");
-  std::regex bucle_while(R"(while)");
+  std::regex bucle_for(R"(\sfor\s*\(.*)");
+  std::regex bucle_while(R"(\swhile\s*\(.*)");
 
   // main
-  std::regex main(R"(main)");
+  std::regex main(R"(main\s*\(.*\)\s*\{)");
 
-  //match
+  // smatch
   std::smatch match;
 
   int line_number = 0;

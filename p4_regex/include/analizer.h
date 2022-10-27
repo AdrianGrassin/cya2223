@@ -20,7 +20,7 @@ class analizer {
   friend std::ostream &operator<<(std::ostream &os, const analizer &analizer);
  private:
 
-  bool main_found_;
+  bool main_found_ = false;
   std::vector<comentarios> comentarios_;
   std::vector<Declaracion> declaraciones_;
   std::vector<bucles> bucles_;

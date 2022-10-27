@@ -28,6 +28,11 @@
 #include <string>
 #include "../include/analizer.h"
 
+int hola;
+int hi = 10;
+double yup;
+double yu = 10;
+
 int main(int argc, char *argv[]) {
   if (argc != 3) {
     std::cout << "Usage: ./analize_code_p4 <filename> <fileout>" << std::endl;

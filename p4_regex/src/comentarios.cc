@@ -10,7 +10,7 @@ std::ostream &operator<<(std::ostream &os, const comentarios &comentarios) {
   } else if (comentarios.lineas_que_abarca_.first == 1 && already_printed) {
     os << "[Line " << comentarios.lineas_que_abarca_.first << "-" << comentarios.lineas_que_abarca_.second<< "] " << "DESCRIPTION" << std::endl;
   } else if (comentarios.lineas_que_abarca_.first == comentarios.lineas_que_abarca_.second) {
-   os << "[Line " << comentarios.lineas_que_abarca_.first << "] " << comentarios.comentario_;
+   os << "[Line " << comentarios.lineas_que_abarca_.first << "] " << comentarios.comentario_ << std::endl;
   } else {
     os << "[Line " << comentarios.lineas_que_abarca_.first << " - " << comentarios.lineas_que_abarca_.second << "] ";
     os << comentarios.comentario_ << std::endl;
