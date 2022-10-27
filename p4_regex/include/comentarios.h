@@ -1,12 +1,8 @@
-//
-// Created by grass on 27/10/2022.
-//
-
 #ifndef UNTITLED_INCLUDE_COMENTARIOS_H_
 #define UNTITLED_INCLUDE_COMENTARIOS_H_
 #include <iostream>
 
-
+// clase que crea los objetos comentarios
 
 class comentarios {
   std::string comentario_;

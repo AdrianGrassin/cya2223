@@ -1,13 +1,6 @@
 #include "../include/analizer.h"
 
 
-// constructor will analize the file and create the objects
-// if it is a comment then it will create a comment object
-// comments can be multiline
-// if it is a declaration then it will create a declaration object
-// if a comment is multiline then it has to read till the end of the comment
-// bucles can be for and while
-
 analizer::analizer(std::ifstream &file) {
 
 

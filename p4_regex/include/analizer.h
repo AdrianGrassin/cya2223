@@ -1,7 +1,3 @@
-//
-// Created by grass on 27/10/2022.
-//
-
 #ifndef UNTITLED_INCLUDE_ANALIZER_H_
 #define UNTITLED_INCLUDE_ANALIZER_H_
 
