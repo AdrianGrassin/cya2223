@@ -1,0 +1,19 @@
+2
+a
+b
+3
+S
+A
+B
+S
+10
+S --> aS
+S --> bA
+S --> BAaa
+A --> aBBa
+A --> bB
+A --> BBAb
+B --> aB
+B --> bB
+B --> abBB
+B --> AbAb

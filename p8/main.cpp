@@ -1,52 +1,8 @@
-/**
- * @mainpage PRACTICA 8 - CyA - 2022/2023
- * @section intro_sec Introducción
- *
- * En esta práctica se implementa un programa que a partir de una gramática, construye una gramática en forma normal de
- * Chomsky equivalente.
- *
- * @section install_sec Compilación
- *
- * Para compilar el programa se debe ejecutar el siguiente comando:
- *  - make
- *
- * @section run_sec Ejecución
- *
- * Para ejecutar el programa se debe ejecutar el siguiente comando:
- * - ./Gramar2CNF input.fa output.gra
- *         * [input.gra] es el fichero que contiene la gramática.
- *         * [output.gra] es el fichero donde se guardará la gramática en forma normal de Chomsky equivalente.
- *
- * @section author_sec Autor
- *   @author Adrián Grassin Luis
- *
- * @section license_sec Licencia
- * - Licencia: GNU General Public License v3.0
- *
- * @section bugs_sec Bugs
- * - No se han encontrado bugs.
- *
- * @section todo_sec To Do
- * - No hay nada pendiente.
- *
- * @section references_sec Referencias
- *   CyA_2022_2023_P8_Grammar2CNF.pdf
- *
- * @section version_sec Version
- * @version 1.0
- *
- * @date 20/11/2022
- *
- */
-
-
 #include <iostream>
-#include "../include/gramatica.h"
+#include "include/gramatica.h"
 
-int main(int argc, char *argv[]) {
-
-  // Argument Handling
-  if (std::string(argv[1]) == "--help") {
+int main(int argc, char** argv) {
+  if (argc >= 1 && std::string(argv[1]) == "--help" ) {
     std::cout << "Uso: ./Grammar2CNF input.gra output.gra" << std::endl;
     std::cout << "Convierte una gramática en una gramática equivalente escrita en forma normal de Chomsky" << std::endl;
     std::cout << "input.gra: Fichero que contiene la Gramática introducida" << std::endl;
@@ -81,13 +37,17 @@ int main(int argc, char *argv[]) {
     }
     // End of Argument Handling
 
+    Gramatica gramatica(archivo_entrada);
+    gramatica.EscribirGramatica(archivo_gramatica);
 
+    Gramatica gramatica_chomsky = gramatica.ToChomsky();
+    gramatica_chomsky.EscribirGramatica(archivo_salida);
 
-
+    archivo_entrada.close();
+    archivo_salida.close();
 
   } catch (std::runtime_error &e) {
     std::cout << e.what() << std::endl;
   }
 
-  return 0;
 }

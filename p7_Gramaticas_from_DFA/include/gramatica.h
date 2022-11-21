@@ -14,7 +14,7 @@ class Automata;
 class Gramatica {
  public:
   explicit Gramatica(const Automata &dfa);
-
+  explicit Gramatica(std::ifstream &archivo);
 
   void write(std::ofstream &os) const;
   friend std::ostream &operator<<(std::ostream &os, const Gramatica &gramatica);
@@ -22,6 +22,7 @@ class Gramatica {
  private:
   Alfabeto alfabeto_;
   Simbolo simbolo_inicial_;
+  std::vector<Simbolo> no_terminales_;
   std::vector<Produccion> producciones_;
 
 };

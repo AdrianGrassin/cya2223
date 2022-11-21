@@ -53,5 +53,13 @@ std::ostream &operator<<(std::ostream &os, const Produccion &produccion) {
   return os;
 }
 
+Produccion::Produccion(std::string &linea, const Alfabeto &alfabeto) {
+  // la producción viene en la forma: A -> a, A -> b, A -> &, A -> aB, A -> bC
+
+
+
+
+}
+
 
 

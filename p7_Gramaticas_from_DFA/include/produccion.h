@@ -11,6 +11,7 @@
 class Produccion {
  public:
   Produccion(const Estado &estado, const Alfabeto &alfabeto);
+  Produccion(std::string &linea, const Alfabeto &alfabeto);
 
   static std::string EstadoToString(const Estado &estado);
 
