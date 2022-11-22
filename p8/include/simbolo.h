@@ -10,23 +10,34 @@
 class Simbolo {
 
  public:
-    explicit Simbolo(const std::string& simbol);
-    Simbolo() = default;
-    ~Simbolo() = default;
+  explicit Simbolo(const std::string &simbol);
+  Simbolo() = default;
+  ~Simbolo() = default;
 
-    bool operator==(const Simbolo& otro_simbolo) const;
-    bool operator<(const Simbolo& otro_simbolo) const;
-    bool operator!=(const Simbolo& otro_simbolo) const;
+  bool operator==(const Simbolo &otro_simbolo) const;
+  bool operator<(const Simbolo &otro_simbolo) const;
+  bool operator!=(const Simbolo &otro_simbolo) const;
 
-    friend std::istream& operator>>(std::istream& is, Simbolo& simbolo) {
-        is >> simbolo.simbolo_;
-        return is;
-    }
+  bool EsTerminalUnitario() const;
+  bool EsNoTerminalFNC() const;
+  bool EsNoTerminalUnitario() const;
 
-    std::string ToString() const;
+  friend std::istream &operator>>(std::istream &is, Simbolo &simbolo) {
+    is >> simbolo.simbolo_;
+    return is;
+  }
+
+  // make simbol iterable
+  std::string::iterator begin() { return simbolo_.begin(); }
+  std::string::iterator end() { return simbolo_.end(); }
+  std::string::const_iterator begin() const { return simbolo_.begin(); }
+  std::string::const_iterator end() const { return simbolo_.end(); }
+
+  std::string ToString() const;
+  static Simbolo GetNewNonTerminal();
 
  private:
-   std::string simbolo_;
+  std::string simbolo_;
 
 };
 

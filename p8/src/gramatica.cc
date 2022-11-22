@@ -3,8 +3,11 @@
 //
 
 #include "../include/gramatica.h"
+#include <windows.h>
 
 Gramatica::Gramatica(std::ifstream &archivo) {
+
+  SetConsoleOutputCP(65001);
 
   std::string linea;
   std::getline(archivo, linea);
@@ -32,80 +35,23 @@ Gramatica::Gramatica(std::ifstream &archivo) {
     std::getline(archivo, linea);
     std::stringstream ss(linea);
 
-    Simbolo basura;
+    Simbolo arrow;
     Simbolo no_terminal;
     Simbolo produccion;
 
     ss >> no_terminal;
-    ss >> basura;
+    ss >> arrow;
     ss >> produccion;
 
+    // crea una producción nueva en caso de que no exista
     if (producciones_.find(no_terminal) == producciones_.end()) {
       producciones_[no_terminal] = producciones_.insert({no_terminal, {}}).first->second;
     }
     producciones_[no_terminal].push_back(produccion);
   }
-
 }
 
-std::vector<Simbolo> Gramatica::GetProduccion(const Simbolo &simbolo) const {
-  return producciones_.at(simbolo);
-}
-
-bool Gramatica::ProduccionUnitaria(const Simbolo &simbolo) const {
-
-}
-bool Gramatica::ProduccionVacia(const Simbolo &simbolo) const {
-  return producciones_.at(simbolo).size() == 0;
-}
-
-/*
-1: for all (A → X1X2 . . . Xn (con n ≥ 2, Xi ∈ (Σ ∪ V )) do
-2: for all (Xi) do
-3: if (Xi = a ∈ Σ) then
-4: Add the production Ca → a;
-5: Replace Xi with Ca in A → X1X2 . . . Xn;
-6: end if
-7: end for
-8: end for
-9: for all (A → B1B2 . . . Bm (con m ≥ 3, Bi ∈ V ) do
-10: Add m − 2 non-terminal symbols D1D2 . . . Dm−2;
-11: Replace the production A → B1B2 . . . Bm with productions:
-12: A → B1D1
-13: D1 → B2D2
-14: . . .
-15: Dm−2 → Bm−1Bm
-16: end for
-*/
-
-Gramatica Gramatica::ToChomsky() const {
-  Gramatica gramatica_chomsky = Gramatica(*this);
-
-  for (auto &produccion : gramatica_chomsky.producciones_) {
-    for (auto &simbolo : produccion.second) {
-      if (simbolo.ToString().size() > 1) {
-        Simbolo nuevo_simbolo = Simbolo(simbolo.ToString().substr(0, 1));
-        gramatica_chomsky.simbolos_no_terminales_.insert(nuevo_simbolo);
-        gramatica_chomsky.producciones_[nuevo_simbolo] = {simbolo};
-        simbolo = nuevo_simbolo;
-      }
-    }
-  }
-
-  for (auto &produccion : gramatica_chomsky.producciones_) {
-    if (produccion.second.size() > 2) {
-      Simbolo nuevo_simbolo = Simbolo(produccion.second[0].ToString() + produccion.second[1].ToString());
-      gramatica_chomsky.simbolos_no_terminales_.insert(nuevo_simbolo);
-      gramatica_chomsky.producciones_[nuevo_simbolo] = {produccion.second[1], produccion.second[2]};
-      produccion.second = {produccion.second[0], nuevo_simbolo};
-    }
-  }
-
-  return gramatica_chomsky;
-
-}
-
-void Gramatica::EscribirGramatica(std::ofstream &archivo) const {
+void Gramatica::EscribirGramatica(std::basic_ostream<char> &archivo) const {
   archivo << simbolos_no_terminales_.size() << std::endl;
   for (const auto &simbolo : simbolos_no_terminales_) {
     archivo << simbolo.ToString() << std::endl;
@@ -127,3 +73,91 @@ void Gramatica::EscribirGramatica(std::ofstream &archivo) const {
     }
   }
 }
+
+Gramatica Gramatica::ToChomsky() const {
+  Gramatica gramatica_chomsky = Gramatica(*this);
+
+  // primera pasada: sustituir las producciones de la forma A -> aB por A -> XB y X -> a
+  for (const auto &produccion : gramatica_chomsky.producciones_) {
+    for (const auto &simbolo : produccion.second) {
+      // comprobamos que la producción es de la forma A -> a
+      if (simbolo.EsTerminalUnitario()) {
+        continue;
+      }
+
+      // comprobamos que la producción es de la forma A -> BC
+      if (simbolo.EsNoTerminalFNC()) {
+        continue;
+      }
+
+      std::set<Simbolo> simbolos_usados;
+      for (const auto &c : simbolo.ToString()) {
+        if (islower(c) && simbolos_usados.find(Simbolo(std::string(1, c))) == simbolos_usados.end()) {
+          Simbolo new_non_terminal = Simbolo::GetNewNonTerminal();
+          simbolos_usados.insert(Simbolo(std::string(1, c)));
+          gramatica_chomsky.simbolos_no_terminales_.insert(new_non_terminal);
+          gramatica_chomsky.producciones_[new_non_terminal] = {Simbolo(std::string(1, c))};
+
+          for (auto &v_produccion : gramatica_chomsky.producciones_) {
+            if (v_produccion.second.size() == 1 && v_produccion.second[0].EsTerminalUnitario()) {
+              continue;
+            }
+            for (auto &prod : v_produccion.second) {
+              for (auto &letra : prod) {
+                if (letra == c) {
+                  letra = new_non_terminal.ToString()[0];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  std::cout << "Primera pasada: " << gramatica_chomsky << std::endl;
+
+  // segunda pasada: sustituir las producciones de la forma A -> ABC por A -> AD y D -> BC
+  // otro ejemplo A -> BCDE por A -> BCG y G -> DE y luego A -> BH y H -> CG
+  for (const auto &produccion : gramatica_chomsky.producciones_) {
+    for (const auto &simbolo : produccion.second) {
+      if (simbolo.EsTerminalUnitario()) {
+        continue;
+      }
+      if (simbolo.EsNoTerminalFNC()) {
+        continue;
+      }
+
+
+
+
+    }
+
+  }
+
+  std::cout << "Segunda pasada: " << gramatica_chomsky << std::endl;
+
+  return gramatica_chomsky;
+}
+
+std::ostream &operator<<(std::ostream &os, const Gramatica &gramatica) {
+  os << "Simbolos no terminales: " << std::endl;
+  for (const auto &simbolo : gramatica.simbolos_no_terminales_) {
+    os << simbolo.ToString() << std::endl;
+  }
+  os << "Simbolos terminales: " << std::endl;
+  for (const auto &simbolo : gramatica.simbolos_terminales_) {
+    os << simbolo.ToString() << std::endl;
+  }
+  os << "Simbolo inicial: " << std::endl;
+  os << gramatica.simbolo_inicial_.ToString() << std::endl;
+  os << "Producciones: " << std::endl;
+  for (const auto &produccion : gramatica.producciones_) {
+    for (const auto &simbolo : produccion.second) {
+      os << produccion.first.ToString() << " -> " << simbolo.ToString() << std::endl;
+    }
+  }
+  return os;
+}
+
+
+

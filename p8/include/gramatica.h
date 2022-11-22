@@ -15,17 +15,14 @@
 
 class Gramatica {
  public:
-  explicit Gramatica(std::ifstream& archivo);
+  explicit Gramatica(std::ifstream &archivo);
   ~Gramatica() = default;
 
-  std::vector<Simbolo> GetProduccion(const Simbolo& simbolo) const;
-  bool ProduccionVacia(const Simbolo& simbolo) const;
-  bool ProduccionUnitaria(const Simbolo& simbolo) const;
+
 
   Gramatica ToChomsky() const;
-  void EscribirGramatica(std::ofstream& archivo) const;
-
-
+  void EscribirGramatica(std::basic_ostream<char> &archivo) const;
+  friend std::ostream &operator<<(std::ostream &os, const Gramatica &gramatica);
 
  private:
   std::map<Simbolo, std::vector<Simbolo>> producciones_;
