@@ -65,4 +65,8 @@ bool Simbolo::EsNoTerminalUnitario() const {
 Simbolo Simbolo::GetNewNonTerminal() {
   return Simbolo( std::string(1, 'F' + simbolo_count++));
 }
+Simbolo &Simbolo::operator+(const Simbolo &otro_simbolo) {
+  simbolo_ += otro_simbolo.simbolo_;
+  return *this;
+}
 

@@ -36,6 +36,8 @@ class Simbolo {
   std::string ToString() const;
   static Simbolo GetNewNonTerminal();
 
+  Simbolo &operator+(const Simbolo &otro_simbolo);
+
  private:
   std::string simbolo_;
 

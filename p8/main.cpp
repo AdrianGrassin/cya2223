@@ -1,8 +1,12 @@
 #include <iostream>
 #include "include/gramatica.h"
+#include <windows.h>
 
 int main(int argc, char** argv) {
-  if (argc >= 1 && std::string(argv[1]) == "--help" ) {
+
+  SetConsoleOutputCP(65001);
+
+  if (argc >= 2 && std::string(argv[1]) == "--help" ) {
     std::cout << "Uso: ./Grammar2CNF input.gra output.gra" << std::endl;
     std::cout << "Convierte una gramática en una gramática equivalente escrita en forma normal de Chomsky" << std::endl;
     std::cout << "input.gra: Fichero que contiene la Gramática introducida" << std::endl;
