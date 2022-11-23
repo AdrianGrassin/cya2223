@@ -1,7 +1,3 @@
-//
-// Created by grass on 21/11/2022.
-//
-
 #ifndef P8_SRC_SIMBOLO_H_
 #define P8_SRC_SIMBOLO_H_
 
@@ -14,18 +10,15 @@ class Simbolo {
   Simbolo() = default;
   ~Simbolo() = default;
 
+
+  bool EsTerminalUnitario() const;
+  bool EsNoTerminalFNC() const;
+
   bool operator==(const Simbolo &otro_simbolo) const;
   bool operator<(const Simbolo &otro_simbolo) const;
   bool operator!=(const Simbolo &otro_simbolo) const;
 
-  bool EsTerminalUnitario() const;
-  bool EsNoTerminalFNC() const;
-  bool EsNoTerminalUnitario() const;
-
-  friend std::istream &operator>>(std::istream &is, Simbolo &simbolo) {
-    is >> simbolo.simbolo_;
-    return is;
-  }
+  friend std::istream &operator>>(std::istream &is, Simbolo &simbolo);
 
   // make simbol iterable
   std::string::iterator begin() { return simbolo_.begin(); }

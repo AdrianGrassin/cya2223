@@ -3,7 +3,12 @@
 //
 
 #include "../include/gramatica.h"
-#include <windows.h>
+
+/**
+ * @brief Constructor de la clase Gramatica
+ * @param archivo archivo de texto que contiene la gramatica (extensión ".gra")
+ *
+ */
 
 Gramatica::Gramatica(std::ifstream &archivo) {
 
@@ -49,6 +54,10 @@ Gramatica::Gramatica(std::ifstream &archivo) {
   }
 }
 
+/**
+ * @brief Metodo que escribe la gramatica en un archivo de texto
+ * @param archivo archivo de textoal que se va a escribir (extensión ".gra")
+ */
 void Gramatica::EscribirGramatica(std::basic_ostream<char> &archivo) const {
   archivo << simbolos_no_terminales_.size() << std::endl;
   for (const auto &simbolo : simbolos_no_terminales_) {
@@ -72,6 +81,12 @@ void Gramatica::EscribirGramatica(std::basic_ostream<char> &archivo) const {
   }
 }
 
+
+/**
+ * @brief Metodo que pasa la gramatica a forma normal de chomsky
+ * @return Gramatica en forma normal de chomsky
+ *
+ */
 Gramatica Gramatica::ToChomsky() const {
   Gramatica gramatica_chomsky = Gramatica(*this);
   std::set<Simbolo> simbolos_usados;

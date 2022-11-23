@@ -1,14 +1,39 @@
+/**
+ * UNIVERSIDAD DE LA LAGUNA - ESCUELA SUPERIOR DE INGENIERÍA Y TECNOLOGÍA - GRADO EN INGENIERÍA INFORMÁTICA
+ * ASIGNATURA: Computabilidad y Algoritmia
+ * CURSO: 2º
+ * PRÁCTICA 8: Gramáticas Libres de Contexto
+ *
+ * @author Adrian Grassin Luis
+ * @date 20-11-2022
+ *
+ * @mainpage Practica 8
+ * @brief Practica 8 de la asignatura de Computabilidad y Algoritmia
+ *
+ * @section intro_sec Introducción
+ *
+ * En esta práctica se implementa un programa que lee una gramática libre de contexto
+ * y la convierte a forma normal de Chomsky.
+ *
+ * @section install_sec Compilación
+ *
+ * Para compilar el programa se debe ejecutar el comando make en la carpeta raíz del proyecto.
+ *
+ * @section run_sec Ejecución
+ *
+ * Para ejecutar el programa se debe ejecutar el comando ./p8 <archivo_entrada>.gra <archivo_salida>.gra
+ *
+ */
+
 #include <iostream>
 #include "include/gramatica.h"
-#include <windows.h>
+
 
 int main(int argc, char** argv) {
 
-  SetConsoleOutputCP(65001);
-
   if (argc >= 2 && std::string(argv[1]) == "--help" ) {
     std::cout << "Uso: ./Grammar2CNF input.gra output.gra" << std::endl;
-    std::cout << "Convierte una gramática en una gramática equivalente escrita en forma normal de Chomsky" << std::endl;
+    std::cout << "Convierte una gramática en una gramatica equivalente escrita en forma normal de Chomsky" << std::endl;
     std::cout << "input.gra: Fichero que contiene la Gramática introducida" << std::endl;
     std::cout << "output.gra: Fichero donde se guardará la gramática en forma normal de Chomsky equivalente"
               << std::endl;

@@ -1,7 +1,3 @@
-//
-// Created by grass on 21/11/2022.
-//
-
 #ifndef P8_SRC_GRAMATICA_H_
 #define P8_SRC_GRAMATICA_H_
 
