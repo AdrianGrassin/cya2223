@@ -3,4 +3,4 @@ project(p11)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(p11 main.cpp)
+add_executable(p11 main.cpp source/Algoritmos.cc)
